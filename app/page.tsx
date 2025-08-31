@@ -813,7 +813,7 @@ export default function Home() {
                   </button>
                 </div>
                 <p className="text-sm text-foreground m-auto">
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <button
                     onClick={() => setView("signup")}
                     className="cursor-pointer">
