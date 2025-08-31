@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true, // don't fail the build on ESLint errors
-  },
-  // typescript: { ignoreBuildErrors: true }, // <- ONLY if TS blocks build
+  eslint: { ignoreDuringBuilds: true }, // <-- unblocks deploys
+  // optional: fix the “workspace root inferred” warning
+  outputFileTracingRoot: path.join(__dirname),
 };
 
 module.exports = nextConfig;
