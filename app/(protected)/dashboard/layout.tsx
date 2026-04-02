@@ -1,33 +1,22 @@
-// app/dashboard/layout.tsx
-import clsx from "clsx";
-import { Metadata } from "next";
-import { fontSans } from "@/config/fonts";
+// app/(protected)/dashboard/layout.tsx
+import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 
 export const metadata: Metadata = {
-  title: "MyBrand | Dashboard",
+  title: "Dashboard | MyBrand",
   description: "Overview and analytics",
 };
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  // Why: Segment layout cannot include <html>; we mirror your RootLayout styles here.
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className={clsx(
-        "min-h-screen text-foreground bg-background font-sans antialiased",
-        fontSans.variable
-      )}>
-      <div className="relative flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-1 p-4 md:p-6">{children}</main>
-        <footer className="w-full flex items-center justify-center py-3 text-sm text-foreground/60">
-          © {new Date().getFullYear()} MyBrand. All rights reserved.
-        </footer>
-      </div>
+    <div className="min-h-screen flex flex-col bg-background">
+      <Navbar />
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-8">
+        {children}
+      </main>
+      <footer className="border-t border-border/40 py-4 text-center text-xs text-muted-foreground">
+        © {new Date().getFullYear()} MyBrand. All rights reserved.
+      </footer>
     </div>
   );
 }

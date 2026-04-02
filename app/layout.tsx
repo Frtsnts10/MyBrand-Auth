@@ -1,44 +1,30 @@
+import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
-import { Metadata, Viewport } from "next";
-import clsx from "clsx";
-
 import { Providers } from "./providers";
-import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
-
-// NOTE: No Navbar here so public pages (e.g., sign-in) stay clean.
-// Navbar is rendered only in app/(protected)/layout.tsx
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    default: "MyBrand | Auth",
+    template: "%s | MyBrand",
   },
-  description: siteConfig.description,
+  description:
+    "MyBrand — your trusted platform for seamless authentication and secure access.",
   icons: { icon: "/favicon.ico" },
 };
 
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d0f1a" },
   ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="en">
       <head />
-      <body
-        className={clsx(
-          "min-h-screen text-foreground bg-background font-sans antialiased",
-          fontSans.variable
-        )}>
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+      <body className="min-h-screen bg-background text-foreground antialiased font-sans">
+        <Providers attribute="class" defaultTheme="dark" enableSystem>
           <main>{children}</main>
         </Providers>
       </body>

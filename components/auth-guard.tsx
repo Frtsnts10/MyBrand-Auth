@@ -3,33 +3,15 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { supabase } from "@/lib/supabase";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   children: ReactNode;
   redirectTo?: string;
-  fallback?: ReactNode;
 };
 
-export function AuthGuard({
-  children,
-  redirectTo = "/",
-  fallback = (
-    <div className="flex min-h-screen items-center justify-center text-center">
-      <div className="flex items-center gap-3 animate-pulse rounded-xl border border-foreground/10 px-6 py-4">
-        {/* Spinner */}
-        <div className="w-4 h-4 border-2 border-foreground/30 border-t-foreground rounded-full animate-spin" />
-        {/* Text */}
-        <span>Checking session…</span>
-      </div>
-    </div>
-  ),
-}: Props) {
+export function AuthGuard({ children, redirectTo = "/" }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const [checking, setChecking] = useState(true);
@@ -48,13 +30,11 @@ export function AuthGuard({
       setChecking(false);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_e, session) => {
-        if (!mounted.current) return;
-        if (!session) doRedirect();
-        setChecking(false);
-      }
-    );
+    const { data: listener } = supabase.auth.onAuthStateChange((_e, session) => {
+      if (!mounted.current) return;
+      if (!session) doRedirect();
+      setChecking(false);
+    });
 
     return () => {
       mounted.current = false;
@@ -62,6 +42,16 @@ export function AuthGuard({
     };
   }, [router, pathname, redirectTo]);
 
-  if (checking) return fallback;
+  if (checking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="flex items-center gap-3 glass-dark rounded-2xl px-6 py-4">
+          <Loader2 className="w-5 h-5 animate-spin text-primary" />
+          <span className="text-muted-foreground text-sm">Verifying session…</span>
+        </div>
+      </div>
+    );
+  }
+
   return <>{children}</>;
 }
