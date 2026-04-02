@@ -33,22 +33,14 @@ const signupSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z
     .string()
-    .min(8, "At least 8 characters")
-    .regex(/[A-Z]/, "Must include an uppercase letter")
-    .regex(/[a-z]/, "Must include a lowercase letter")
-    .regex(/[0-9]/, "Must include a number")
-    .regex(/[^a-zA-Z0-9]/, "Must include a special character"),
+    .min(6, "At least 6 characters")
 });
 
 const updatePasswordSchema = z
   .object({
     password: z
       .string()
-      .min(8, "At least 8 characters")
-      .regex(/[A-Z]/, "Must include an uppercase letter")
-      .regex(/[a-z]/, "Must include a lowercase letter")
-      .regex(/[0-9]/, "Must include a number")
-      .regex(/[^a-zA-Z0-9]/, "Must include a special character"),
+      .min(6, "At least 6 characters"),
     confirmPassword: z.string(),
   })
   .refine((d) => d.password === d.confirmPassword, {
@@ -224,9 +216,6 @@ function AuthPage() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="relative flex md:w-[420px] lg:w-[480px] shrink-0 flex-col items-center justify-center p-8 md:p-10 border-r border-border/40 bg-card"
       >
-        {/* Subtle gradient blob */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 w-full max-w-sm">
           {/* Logo */}
@@ -443,26 +432,12 @@ function AuthPage() {
         initial={{ opacity: 0, x: 60 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-        className="hidden md:flex flex-1 items-center justify-center relative overflow-hidden"
+        className="hidden md:flex flex-1 items-center justify-center relative overflow-hidden bg-slate-900"
       >
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[hsl(250,60%,12%)] via-[hsl(262,70%,18%)] to-[hsl(200,70%,10%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(263_75%_65%/0.25),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(200_90%_55%/0.15),transparent_60%)]" />
-
-        {/* Floating orbs */}
-        <motion.div
-          animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-20 right-20 w-64 h-64 rounded-full bg-primary/10 blur-3xl"
-        />
-        <motion.div
-          animate={{ y: [0, 20, 0], rotate: [0, -3, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-20 left-20 w-80 h-80 rounded-full bg-cyan-500/10 blur-3xl"
-        />
-
-        {/* Grid overlay */}
+        {/* Clean, static gradient background to avoid heavy GPU usage */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900" />
+        
+        {/* Grid overlay (static, light) */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -500,7 +475,7 @@ function AuthPage() {
                 { icon: RefreshCw, label: "Instant password recovery" },
                 { icon: Sparkles, label: "Passwordless email sign-in" },
               ].map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-3 glass rounded-xl px-4 py-3">
+                <div key={label} className="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-3 border border-white/10">
                   <Icon className="w-4 h-4 text-primary shrink-0" />
                   <span className="text-sm text-white/80">{label}</span>
                 </div>
