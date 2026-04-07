@@ -150,8 +150,8 @@ function AuthPage() {
     try {
       const { error } = await supabase.auth.signInWithPassword({ email: data.email, password: data.password });
       if (error) throw error;
-      toast({ title: "Welcome back!", description: "Signed in successfully." });
-      router.push("/dashboard");
+      toast({ title: "Signed in! 🎉", description: "Welcome back to MyBrand." });
+      router.push("/home");
     } catch (err: any) {
       toast({ variant: "destructive", title: "Sign in failed", description: err.message });
     } finally { setLoading(false); }

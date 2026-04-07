@@ -1,19 +1,19 @@
-"use client";
-
-import React from "react";
+// app/(protected)/layout.tsx
 import { AuthGuard } from "@/components/auth-guard";
+import { Navbar } from "@/components/navbar";
 
-export default function ProtectedLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex min-h-screen flex-col">
-      {/* Main content wrapped in AuthGuard */}
-      <main className="flex-1">
-        <AuthGuard>{children}</AuthGuard>
-      </main>
-    </div>
+    <AuthGuard>
+      <div className="min-h-screen flex flex-col bg-background">
+        <Navbar />
+        <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 md:py-8">
+          {children}
+        </main>
+        <footer className="border-t border-border/40 py-4 text-center text-xs text-muted-foreground">
+          © {new Date().getFullYear()} MyBrand. All rights reserved.
+        </footer>
+      </div>
+    </AuthGuard>
   );
 }
