@@ -54,7 +54,7 @@ function validatePassword(password: string): boolean {
   }
 }
 
-export default function Home() {
+function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -503,6 +503,14 @@ export default function Home() {
           <ThemeSwitch />
         </div>
       </div>
+    </Suspense>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={null}>
+      <HomeContent />
     </Suspense>
   );
 }
