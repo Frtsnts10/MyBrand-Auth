@@ -12,7 +12,7 @@ export default function ProtectedLayout({
 }) {
   return (
     <AuthGuard>
-      <div className="relative flex min-h-screen">
+      <div className="relative flex min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 dark:from-slate-900 dark:to-slate-800">
         <Sidebar />
         <div className="flex-1 flex flex-col min-w-0">
           <Navbar />

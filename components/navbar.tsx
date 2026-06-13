@@ -112,7 +112,7 @@ export const Navbar: React.FC<Props> = ({ onLogout }) => {
       <HeroUINavbar
         maxWidth="full"
         position="sticky"
-        className="px-0 backdrop-blur-md bg-background/60 border-b border-foreground/10">
+        className="px-0 bg-white/40 dark:bg-black/40 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm">
         <NavbarContent justify="start" className="basis-1/3 md:hidden">
           <button
             className="p-2 rounded-md hover:bg-foreground/5"
