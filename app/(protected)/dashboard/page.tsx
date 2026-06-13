@@ -99,7 +99,23 @@ export default function DashboardPage() {
         <Stat title="Growth" value="+5.7%" Icon={TrendingUp} />
       </section>
 
-      <section className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
+      <div className="relative mt-2">
+        <div className="absolute inset-0 z-10 backdrop-blur-[2px] bg-background/40 flex flex-col items-center justify-center rounded-2xl">
+          <div className="bg-background/80 backdrop-blur-md border border-foreground/10 shadow-2xl rounded-2xl p-6 md:p-8 flex flex-col items-center text-center max-w-sm">
+            <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
+              <svg className="size-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-bold mb-2">Coming Soon</h2>
+            <p className="text-sm text-foreground/70">
+              Advanced analytics and comprehensive reports are being built. Stay tuned!
+            </p>
+          </div>
+        </div>
+
+        <div className="opacity-30 pointer-events-none select-none space-y-6 overflow-hidden max-h-[800px]">
+          <section className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
         <div className="xl:col-span-2 rounded-2xl border border-foreground/10 p-4 md:p-6 bg-white/70 dark:bg-black/30">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">Monthly Performance</h2>
@@ -173,6 +189,8 @@ export default function DashboardPage() {
           </table>
         </div>
       </section>
+        </div>
+      </div>
     </div>
   );
 }

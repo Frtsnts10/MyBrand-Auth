@@ -8,10 +8,13 @@ import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { createClient } from "@supabase/supabase-js";
-import { toast, Toaster } from "react-hot-toast";
+// Mock auth
+import { addToast } from "@heroui/toast";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { z } from "zod";
+import { Dancing_Script } from "next/font/google";
+
+const scriptFont = Dancing_Script({ subsets: ["latin"] });
 
 /**
  * Why: Cleanly split flows.
@@ -19,10 +22,7 @@ import { z } from "zod";
  * - Reset Password: stay on "reset" until returning with recovery session, then "update".
  */
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+// Mock auth
 
 // ── Validation Schemas ────────────────────────────────────────────────────────
 const emailSchema = z.string().email("Invalid email address");
@@ -39,7 +39,7 @@ function validateEmail(email: string): boolean {
     emailSchema.parse(email);
     return true;
   } catch (error: any) {
-    toast.error(error.errors?.[0]?.message ?? "Validation error");
+    addToast({ title: error.errors?.[0]?.message ?? "Validation error", color: "danger" });
     return false;
   }
 }
@@ -49,7 +49,7 @@ function validatePassword(password: string): boolean {
     passwordSchema.parse(password);
     return true;
   } catch (error: any) {
-    toast.error(error.errors?.[0]?.message ?? "Validation error");
+    addToast({ title: error.errors?.[0]?.message ?? "Validation error", color: "danger" });
     return false;
   }
 }
@@ -62,8 +62,8 @@ export default function Home() {
     "login" | "signup" | "reset" | "update" | "checkEmail" // CHANGED: add checkEmail
   >("login");
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("dummy@example.com");
+  const [password, setPassword] = useState("Password123!");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [lastPassword, setLastPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -80,47 +80,14 @@ export default function Home() {
     setViewState(v);
   };
 
-  // Handle OAuth/recovery hash sessions from Supabase
+  // Check if already signed in mock
   useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash || !hash.includes("access_token")) return;
-
-    const params = new URLSearchParams(hash.substring(1));
-    const access_token = params.get("access_token");
-    const refresh_token = params.get("refresh_token");
-    const hashType = params.get("type"); // e.g., "signup" | "recovery" | "magiclink" | ...
-
-    if (!(access_token && refresh_token)) return;
-
-    supabase.auth
-      .setSession({ access_token, refresh_token })
-      .then(async ({ error }) => {
-        if (error) {
-          toast.error("Session error: " + error.message);
-          return;
-        }
-
-        if (hashType === "recovery") {
-          // Coming from reset password email → show Update Password
-          setView("update");
-        } else if (hashType === "signup") {
-          // CHANGED: After confirming email, force manual login by signing out
-          await supabase.auth.signOut();
-          setView("login");
-        } else {
-          // Fallback: you can route somewhere sensible, e.g., login
-          setView("login");
-        }
-      })
-      .finally(() => {
-        // Clean the URL hash
-        window.history.replaceState(
-          {},
-          document.title,
-          window.location.pathname + window.location.search
-        );
-      });
-  }, []);
+    if (typeof window !== "undefined") {
+      if (window.localStorage.getItem("mock_session") === "true") {
+        router.push("/dashboard");
+      }
+    }
+  }, [router]);
 
   // Handle query param redirects when hash isn't present
   useEffect(() => {
@@ -142,15 +109,11 @@ export default function Home() {
     if (!validateEmail(email) || !validatePassword(password)) return;
     try {
       setLoading(true);
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) throw error;
-      toast.success("Signed in successfully");
+      window.localStorage.setItem("mock_session", "true");
+      addToast({ title: "Signed in successfully", color: "success" });
       router.push("/dashboard");
     } catch (err: any) {
-      toast.error(err.message);
+      addToast({ title: err.message, color: "danger" });
     } finally {
       setLoading(false);
     }
@@ -160,48 +123,23 @@ export default function Home() {
     if (!validateEmail(email) || !validatePassword(password)) return;
     try {
       setLoading(true);
-
-      const baseUrl =
-        typeof window !== "undefined"
-          ? `${window.location.origin}${window.location.pathname}`
-          : "";
-
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${baseUrl}?type=signup`,
-        },
-      });
-      if (error) throw error;
-
-      toast.success("Account created. Please confirm via the email we sent.");
-      setView("checkEmail");
+      window.localStorage.setItem("mock_session", "true");
+      addToast({ title: "Account created successfully!", color: "success" });
+      router.push("/dashboard");
     } catch (err: any) {
-      toast.error(err.message);
+      addToast({ title: err.message, color: "danger" });
     } finally {
       setLoading(false);
     }
-  }, [email, password]);
+  }, [email, password, router]);
 
   const handleResetPassword = useCallback(async () => {
     if (!validateEmail(email)) return;
     try {
       setLoading(true);
-
-      const baseUrl =
-        typeof window !== "undefined"
-          ? `${window.location.origin}${window.location.pathname}`
-          : "";
-
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${baseUrl}?type=recovery`,
-      });
-      if (error) throw error;
-
-      toast.success("Reset password email sent. Check your inbox.");
+      addToast({ title: "Reset password email sent. Check your inbox.", color: "success" });
     } catch (err: any) {
-      toast.error(err.message);
+      addToast({ title: err.message, color: "danger" });
     } finally {
       setLoading(false);
     }
@@ -211,19 +149,17 @@ export default function Home() {
     // Do NOT require email here; session from link identifies the user.
     if (!validatePassword(password)) return;
     if (password !== confirmPassword)
-      return toast.error("Passwords do not match.");
+      return addToast({ title: "Passwords do not match.", color: "danger" });
     if (password === lastPassword)
-      return toast.error("New password must be different from old password.");
+      return addToast({ title: "New password must be different from old password.", color: "danger" });
 
     try {
       setLoading(true);
-      const { error } = await supabase.auth.updateUser({ password });
-      if (error) throw error;
-      toast.success("Password updated. Please login.");
+      addToast({ title: "Password updated. Please login.", color: "success" });
       setLastPassword(password);
       setView("login");
     } catch (err: any) {
-      toast.error(err.message);
+      addToast({ title: err.message, color: "danger" });
     } finally {
       setLoading(false);
     }
@@ -238,7 +174,11 @@ export default function Home() {
         radius="sm"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        classNames={{ input: "text-foreground placeholder:text-foreground/60" }}
+        variant="faded"
+        classNames={{ 
+          inputWrapper: "dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10",
+          input: "text-foreground placeholder:text-foreground/60" 
+        }}
         endContent={
           <button
             type="button"
@@ -264,7 +204,11 @@ export default function Home() {
         radius="sm"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
-        classNames={{ input: "text-foreground placeholder:text-foreground/60" }}
+        variant="faded"
+        classNames={{ 
+          inputWrapper: "dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10",
+          input: "text-foreground placeholder:text-foreground/60" 
+        }}
         endContent={
           <button
             type="button"
@@ -285,16 +229,12 @@ export default function Home() {
   // ── Panels ─────────────────────────────────────────────────────────────────
   const LeftPanel = useMemo(
     () => (
-      <motion.div
-        initial={{ x: -150, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        exit={{ x: -150, opacity: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="hidden md:flex flex-[2] bg-blue-300 dark:bg-blue-500 items-center justify-center p-8 relative">
-        <Toaster
-          position="top-center"
-          containerClassName="!absolute !top-1/2 !left-1/2 -translate-x-1/2 -translate-y-1/2"
-        />
+        <motion.div
+          initial={{ x: -150, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: -150, opacity: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="hidden md:flex flex-[2] bg-gradient-to-br from-blue-50 to-blue-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-blue-950 dark:to-slate-900 items-center justify-center p-8 relative">
         <div className="flex flex-col gap-4 justify-center items-center h-full w-full max-w-xs">
           <AnimatePresence mode="wait">
             {view === "login" && (
@@ -316,7 +256,9 @@ export default function Home() {
                     radius="sm"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    variant="faded"
                     classNames={{
+                      inputWrapper: "dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10",
                       input: "text-foreground placeholder:text-foreground/60",
                     }}
                   />
@@ -328,7 +270,7 @@ export default function Home() {
                 <div className="flex justify-between w-full items-center gap-4">
                   <Button
                     radius="sm"
-                    className="flex-1"
+                    className="flex-1 bg-blue-600 text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/20 dark:border-white/10 border-1 border-transparent"
                     onClick={handleSignIn}
                     isLoading={loading}
                     disabled={loading}>
@@ -370,7 +312,9 @@ export default function Home() {
                     radius="sm"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    variant="faded"
                     classNames={{
+                      inputWrapper: "dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10",
                       input: "text-foreground placeholder:text-foreground/60",
                     }}
                   />
@@ -380,7 +324,7 @@ export default function Home() {
                   {PasswordInput}
                 </div>
                 <Button
-                  className="w-full"
+                  className="w-full bg-blue-600 text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/20 dark:border-white/10 border-1 border-transparent"
                   onClick={handleSignUp}
                   isLoading={loading}
                   disabled={loading}>
@@ -416,7 +360,7 @@ export default function Home() {
                 <div className="flex gap-2">
                   <Button
                     radius="sm"
-                    className="flex-1"
+                    className="flex-1 bg-blue-600 text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/20 dark:border-white/10 border-1 border-transparent"
                     onClick={() => setView("signup")}>
                     Use a different email
                   </Button>
@@ -425,7 +369,7 @@ export default function Home() {
                     href="https://mail.google.com/"
                     target="_blank"
                     rel="noreferrer">
-                    <Button radius="sm" className="w-full" variant="light">
+                    <Button radius="sm" className="w-full dark:text-white dark:hover:bg-white/10" variant="light">
                       Open Gmail
                     </Button>
                   </a>
@@ -452,13 +396,15 @@ export default function Home() {
                     radius="sm"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    variant="faded"
                     classNames={{
+                      inputWrapper: "dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10",
                       input: "text-foreground placeholder:text-foreground/60",
                     }}
                   />
                 </div>
                 <Button
-                  className="w-full"
+                  className="w-full bg-blue-600 text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/20 dark:border-white/10 border-1 border-transparent"
                   onClick={handleResetPassword}
                   isLoading={loading}
                   disabled={loading}>
@@ -502,7 +448,7 @@ export default function Home() {
                 <Button
                   onClick={handleUpdatePassword}
                   isLoading={loading}
-                  className="w-full">
+                  className="w-full bg-blue-600 text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/20 dark:border-white/10 border-1 border-transparent">
                   Update Password
                 </Button>
               </motion.div>
@@ -534,14 +480,14 @@ export default function Home() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="flex-[4] bg-white dark:bg-black flex flex-col items-center justify-center p-8 text-center">
         <div className="flex flex-col gap-4 items-center justify-center max-w-md">
-          <h1 className="text-3xl font-bold text-foreground">MyBrand</h1>
+          <h1 className={`text-6xl font-bold text-foreground ${scriptFont.className}`}>MyBrand</h1>
           <p className="text-lg text-foreground/70">
-            Welcome to MyBrand, your trusted platform for seamless
+            Welcome to <span className={`text-2xl ${scriptFont.className}`}>MyBrand</span>, your trusted platform for seamless
             authentication and secure access.
           </p>
         </div>
         <footer className="absolute bottom-4 text-sm text-foreground/50">
-          © {new Date().getFullYear()} MyBrand. All rights reserved.
+          © {new Date().getFullYear()} <span className={`text-base ${scriptFont.className}`}>MyBrand</span>. All rights reserved.
         </footer>
       </motion.div>
     ),

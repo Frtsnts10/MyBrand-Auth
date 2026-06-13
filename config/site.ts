@@ -1,7 +1,7 @@
 // config/site.ts
 // Dashboard-first config with simple top nav and richer meta used by pages
 
-export type NavItem = { label: string; href: string };
+export type NavItem = { label: string; href: string; icon?: string };
 export type MenuItem = { label: string; href: string };
 export type QuickAction = {
   id: string;
@@ -25,13 +25,13 @@ export const siteConfig = {
    * Minimal top navbar (desktop/tablet). Mobile drawer can show more items.
    */
   navItems: [
-    { label: "Home", href: "/dashboard" },
-    { label: "POS", href: "/pos" },
-    { label: "Products", href: "/products" },   // inventory
-    { label: "Customers", href: "/customers" },
-    { label: "Sales", href: "/sales" },         // sales history
-    { label: "Reports", href: "/reports" },     // analytics
-    { label: "Team", href: "/team" }, 
+    { label: "Home", href: "/dashboard", icon: "Home" },
+    { label: "POS", href: "/pos", icon: "CreditCard" },
+    { label: "Products", href: "/products", icon: "Package" },   // inventory
+    { label: "Customers", href: "/customers", icon: "Users" },
+    { label: "Sales", href: "/sales", icon: "LineChart" },         // sales history
+    { label: "Reports", href: "/reports", icon: "FileText" },     // analytics
+    { label: "Team", href: "/team", icon: "Users2" }, 
   ] as NavItem[],
 
   /**

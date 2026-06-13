@@ -3,12 +3,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+// using local storage for mock auth
 
 type Props = {
   children: ReactNode;
@@ -41,24 +36,14 @@ export function AuthGuard({
       if (pathname !== redirectTo) router.replace(redirectTo);
     };
 
-    supabase.auth.getSession().then(({ data: { session }, error }) => {
-      if (!mounted.current) return;
-      if (error) console.error("auth.getSession error:", error);
-      if (!session) doRedirect();
-      setChecking(false);
-    });
-
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_e, session) => {
-        if (!mounted.current) return;
-        if (!session) doRedirect();
-        setChecking(false);
-      }
-    );
+    const isAuth = window.localStorage.getItem("mock_session") === "true";
+    if (!isAuth) {
+      doRedirect();
+    }
+    setChecking(false);
 
     return () => {
       mounted.current = false;
-      listener.subscription.unsubscribe();
     };
   }, [router, pathname, redirectTo]);
 

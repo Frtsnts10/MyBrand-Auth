@@ -14,7 +14,7 @@ import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
 import { Menu, X, User2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { createClient } from "@supabase/supabase-js";
+// mock auth
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
@@ -23,10 +23,7 @@ type Props = { onLogout?: () => Promise<void> | void };
 
 type NavItem = { href: string; label: string };
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+// mock auth
 
 const DEFAULT_AVATAR_DATA_URL =
   "data:image/svg+xml;utf8," +
@@ -71,17 +68,12 @@ export const Navbar: React.FC<Props> = ({ onLogout }) => {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      const u = data.user;
-      if (!u) return;
-      setEmail(u.email ?? null);
-      const rawName =
-        (u.user_metadata?.full_name as string | undefined) ||
-        (u.user_metadata?.name as string | undefined) ||
-        null;
-      setName(rawName);
-      setAvatarUrl((u.user_metadata?.avatar_url as string | undefined) || null);
-    });
+    const isAuth = window.localStorage.getItem("mock_session") === "true";
+    if (isAuth) {
+      setEmail("demo@example.com");
+      setName("Demo User");
+      setAvatarUrl(null);
+    }
   }, []);
 
   useEffect(() => {
@@ -93,6 +85,7 @@ export const Navbar: React.FC<Props> = ({ onLogout }) => {
 
   const handleLogout = async () => {
     try {
+      window.localStorage.removeItem("mock_session");
       await onLogout?.();
     } finally {
       if (!onLogout) window.location.href = "/";
@@ -119,43 +112,18 @@ export const Navbar: React.FC<Props> = ({ onLogout }) => {
       <HeroUINavbar
         maxWidth="full"
         position="sticky"
-        className="px-0 backdrop-blur bg-background/80 border-b border-foreground/10">
-        <NavbarContent justify="start" className="basis-1/3">
+        className="px-0 backdrop-blur-md bg-background/60 border-b border-foreground/10">
+        <NavbarContent justify="start" className="basis-1/3 md:hidden">
           <button
-            className="md:hidden p-2 rounded-md hover:bg-foreground/5"
+            className="p-2 rounded-md hover:bg-foreground/5"
             aria-label="Open menu"
             aria-expanded={open}
             onClick={() => setOpen(true)}>
             <Menu className="size-5" />
           </button>
-          <NavbarBrand as="li" className="max-w-fit ml-2 md:ml-4">
-            <NextLink className="flex items-center gap-2" href="/dashboard">
-              <div className="size-6 rounded-md bg-foreground/10" />
-              <p className="font-bold">FIL's</p>
-            </NextLink>
-          </NavbarBrand>
         </NavbarContent>
 
-        <NavbarContent justify="center" className="basis-1/3 hidden md:flex">
-          <ul className="flex items-center gap-6">
-            {(siteConfig.navItems as NavItem[]).map((item) => {
-              const active = pathname === item.href;
-              return (
-                <NavbarItem key={item.href} isActive={active}>
-                  <NextLink
-                    href={item.href}
-                    className={clsx(
-                      linkStyles({ color: "foreground" }),
-                      "data-[active=true]:text-primary data-[active=true]:font-medium",
-                      active && "text-primary font-medium"
-                    )}>
-                    {item.label}
-                  </NextLink>
-                </NavbarItem>
-              );
-            })}
-          </ul>
-        </NavbarContent>
+        <NavbarContent justify="center" className="basis-1/3 hidden md:flex" />
 
         {/* Right: theme + profile chip (md+) + logout */}
         <NavbarContent
