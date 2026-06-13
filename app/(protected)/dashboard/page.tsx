@@ -36,7 +36,7 @@ function Stat({
   trend?: "up" | "down";
 }) {
   return (
-    <div className="rounded-2xl border border-white/20 dark:border-white/10 p-4 md:p-5 bg-white/40 dark:bg-white/5 backdrop-blur-xl shadow-sm">
+    <div className="rounded-2xl border border-white/20 dark:border-foreground/10 p-4 md:p-5 bg-white/40 dark:bg-black/30 backdrop-blur-xl shadow-sm">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-foreground/70">{title}</p>
@@ -101,7 +101,7 @@ export default function DashboardPage() {
 
       <div className="relative mt-2">
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-2xl">
-          <div className="bg-white/60 dark:bg-white/10 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-2xl rounded-2xl p-6 md:p-8 flex flex-col items-center text-center max-w-sm">
+          <div className="bg-white/60 dark:bg-background/80 backdrop-blur-2xl border border-white/20 dark:border-foreground/10 shadow-2xl rounded-2xl p-6 md:p-8 flex flex-col items-center text-center max-w-sm">
             <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
               <svg className="size-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -116,7 +116,7 @@ export default function DashboardPage() {
 
         <div className="opacity-30 pointer-events-none select-none space-y-6 overflow-hidden max-h-[800px]">
           <section className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
-        <div className="xl:col-span-2 rounded-2xl border border-white/20 dark:border-white/10 p-4 md:p-6 bg-white/40 dark:bg-white/5 backdrop-blur-xl shadow-sm">
+        <div className="xl:col-span-2 rounded-2xl border border-white/20 dark:border-foreground/10 p-4 md:p-6 bg-white/40 dark:bg-black/30 backdrop-blur-xl shadow-sm">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">Monthly Performance</h2>
             <select className="px-2 py-1 rounded-md bg-foreground/5 text-sm">
@@ -137,7 +137,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/20 dark:border-white/10 p-4 md:p-6 bg-white/40 dark:bg-white/5 backdrop-blur-xl shadow-sm">
+        <div className="rounded-2xl border border-white/20 dark:border-foreground/10 p-4 md:p-6 bg-white/40 dark:bg-black/30 backdrop-blur-xl shadow-sm">
           <h2 className="font-semibold mb-4">Recent Activity</h2>
           <ul className="space-y-3 text-sm">
             {[1, 2, 3, 4, 5].map((i) => (
@@ -153,7 +153,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-white/20 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-xl shadow-sm overflow-hidden">
+      <section className="rounded-2xl border border-white/20 dark:border-foreground/10 bg-white/40 dark:bg-black/30 backdrop-blur-xl shadow-sm overflow-hidden">
         <div className="px-4 md:px-6 py-4 flex items-center justify-between">
           <h2 className="font-semibold">Top Customers</h2>
           <button className="px-3 py-1.5 rounded-md border border-foreground/10">
