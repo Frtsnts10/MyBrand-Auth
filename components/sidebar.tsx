@@ -27,7 +27,7 @@ export const Sidebar = () => {
   return (
     <aside 
       className={clsx(
-        "sticky top-0 h-screen z-40 flex flex-col border-r border-white/20 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-xl transition-all duration-300 shadow-sm",
+        "sticky top-0 h-screen z-40 flex flex-col border-r border-white/20 dark:border-foreground/10 bg-white/40 dark:bg-background/60 backdrop-blur-xl transition-all duration-300 shadow-sm",
         isExpanded ? "w-64" : "w-16"
       )}
       onMouseEnter={() => setIsExpanded(true)}
