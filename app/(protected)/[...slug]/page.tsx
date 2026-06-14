@@ -2,10 +2,14 @@
 
 import React from "react";
 import { Hammer } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, notFound } from "next/navigation";
 
 export default function DevelopmentFallbackPage() {
   const pathname = usePathname();
+  
+  if (pathname === "/profile") {
+    notFound();
+  }
   
   const pathParts = pathname.split("/").filter(Boolean);
   const rawName = pathParts.length > 0 ? pathParts[pathParts.length - 1] : "requested";
