@@ -12,7 +12,11 @@ export default function ProtectedLayout({
 }) {
   return (
     <AuthGuard>
-      <div className="relative flex h-screen overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-100/80 dark:bg-none dark:from-transparent dark:to-transparent">
+      <div className="relative flex h-screen overflow-hidden bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200 dark:bg-gradient-to-br dark:from-slate-900 dark:via-blue-950 dark:to-slate-900">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/20 dark:bg-blue-600/20 blur-[100px] mix-blend-multiply dark:mix-blend-screen" />
+          <div className="absolute bottom-[-10%] right-[-5%] w-[60%] h-[60%] rounded-full bg-cyan-300/20 dark:bg-cyan-700/20 blur-[100px] mix-blend-multiply dark:mix-blend-screen" />
+        </div>
         <Sidebar />
         <div className="flex-1 flex flex-col min-w-0">
           <Navbar />

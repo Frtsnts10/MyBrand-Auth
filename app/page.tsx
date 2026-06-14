@@ -232,7 +232,8 @@ function HomeContent() {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -150, opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="hidden md:flex flex-[2] bg-gradient-to-br from-blue-50 to-blue-100 dark:bg-gradient-to-br dark:from-slate-900 dark:via-blue-950 dark:to-slate-900 items-center justify-center p-8 relative">
+          className="flex flex-1 md:flex-[2] lg:flex-none lg:w-[450px] xl:w-[500px] bg-white/20 dark:bg-black/20 border-r border-white/30 dark:border-white/10 shadow-2xl items-center justify-center p-8 relative z-10"
+          style={{ backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
         <div className="flex flex-col gap-4 justify-center items-center h-full w-full max-w-xs">
           <AnimatePresence mode="wait">
             {view === "login" && (
@@ -484,7 +485,7 @@ function HomeContent() {
         initial={{ x: 150, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="flex-[4] bg-white dark:bg-black flex flex-col items-center justify-center p-8 text-center">
+        className="hidden md:flex flex-[4] flex-col items-center justify-center p-8 text-center relative z-0">
         <div className="flex flex-col gap-4 items-center justify-center max-w-md">
           <h1 className={`text-6xl font-bold text-foreground ${scriptFont.className}`}>MyBrand</h1>
           <p className="text-lg text-foreground/70">
@@ -502,7 +503,11 @@ function HomeContent() {
 
   return (
     <Suspense fallback={null}>
-      <div className="flex min-h-screen flex-col md:flex-row relative">
+      <div className="flex min-h-screen flex-col md:flex-row relative bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200 dark:bg-gradient-to-br dark:from-slate-900 dark:via-blue-950 dark:to-slate-900">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/20 dark:bg-blue-600/20 blur-[100px] mix-blend-multiply dark:mix-blend-screen" />
+          <div className="absolute bottom-[-10%] right-[-5%] w-[60%] h-[60%] rounded-full bg-cyan-300/20 dark:bg-cyan-700/20 blur-[100px] mix-blend-multiply dark:mix-blend-screen" />
+        </div>
         {LeftPanel}
         {RightPanel}
         <div className="fixed bottom-4 right-4 z-50">
