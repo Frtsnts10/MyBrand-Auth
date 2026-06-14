@@ -232,9 +232,12 @@ function HomeContent() {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -150, opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex flex-1 md:flex-[2] lg:flex-none lg:w-[450px] xl:w-[500px] bg-white/20 dark:bg-black/20 border-r border-white/30 dark:border-white/10 shadow-2xl items-center justify-center p-8 relative z-10"
+          className="flex w-full md:w-[400px] lg:w-[450px] xl:w-[500px] flex-none bg-white/20 dark:bg-black/20 border-r border-white/30 dark:border-white/10 shadow-2xl items-center justify-center p-8 relative z-10"
           style={{ backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
         <div className="flex flex-col gap-4 justify-center items-center h-full w-full max-w-xs">
+          <div className="md:hidden mb-4 text-center">
+            <h1 className={`text-5xl font-bold text-foreground ${scriptFont.className}`}>MyBrand</h1>
+          </div>
           <AnimatePresence mode="wait">
             {view === "login" && (
               <motion.div
@@ -485,7 +488,7 @@ function HomeContent() {
         initial={{ x: 150, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="hidden md:flex flex-[4] flex-col items-center justify-center p-8 text-center relative z-0">
+        className="hidden md:flex flex-1 flex-col items-center justify-center p-8 text-center relative z-0">
         <div className="flex flex-col gap-4 items-center justify-center max-w-md">
           <h1 className={`text-6xl font-bold text-foreground ${scriptFont.className}`}>MyBrand</h1>
           <p className="text-lg text-foreground/70">
