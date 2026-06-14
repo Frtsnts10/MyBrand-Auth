@@ -232,10 +232,10 @@ function HomeContent() {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -150, opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex w-full md:w-[400px] lg:w-[450px] xl:w-[500px] flex-none bg-white/20 dark:bg-black/20 border-r border-white/30 dark:border-white/10 shadow-2xl items-center justify-center p-8 relative z-10 overflow-y-auto"
+          className="flex w-full lg:w-[450px] xl:w-[500px] flex-1 lg:flex-none h-full bg-white/20 dark:bg-black/20 lg:border-r border-white/30 dark:border-white/10 shadow-2xl items-center justify-center p-8 relative z-10 overflow-y-auto"
           style={{ backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
         <div className="flex flex-col gap-4 justify-center items-center h-full w-full max-w-xs">
-          <div className="md:hidden mb-4 text-center">
+          <div className="lg:hidden mb-8 text-center">
             <h1 className={`text-5xl font-bold text-foreground ${scriptFont.className}`}>MyBrand</h1>
           </div>
           <AnimatePresence mode="wait">
@@ -488,7 +488,7 @@ function HomeContent() {
         initial={{ x: 150, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="hidden md:flex flex-1 flex-col items-center justify-center p-8 text-center relative z-0">
+        className="hidden lg:flex flex-1 flex-col items-center justify-center p-8 text-center relative z-0">
         <div className="flex flex-col gap-4 items-center justify-center max-w-md">
           <h1 className={`text-6xl font-bold text-foreground ${scriptFont.className}`}>MyBrand</h1>
           <p className="text-lg text-foreground/70">
@@ -506,7 +506,7 @@ function HomeContent() {
 
   return (
     <Suspense fallback={null}>
-      <div className="flex h-screen overflow-hidden flex-col md:flex-row relative bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200 dark:bg-gradient-to-br dark:from-slate-900 dark:via-blue-950 dark:to-slate-900">
+      <div className="flex h-screen overflow-hidden flex-col lg:flex-row relative bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200 dark:bg-gradient-to-br dark:from-slate-900 dark:via-blue-950 dark:to-slate-900">
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/20 dark:bg-blue-600/20 blur-[100px] mix-blend-multiply dark:mix-blend-screen" />
           <div className="absolute bottom-[-10%] right-[-5%] w-[60%] h-[60%] rounded-full bg-cyan-300/20 dark:bg-cyan-700/20 blur-[100px] mix-blend-multiply dark:mix-blend-screen" />
