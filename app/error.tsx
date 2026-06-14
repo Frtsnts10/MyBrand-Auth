@@ -4,6 +4,7 @@ import { useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AlertTriangle, Home, RefreshCw, Mail, Copy } from "lucide-react";
+import { Button } from "@heroui/button";
 
 // Why: Friendly UI, quick actions, optional diagnostics in dev.
 export default function ErrorPage({
@@ -47,12 +48,12 @@ export default function ErrorPage({
         </p>
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-          <button
+          <Button
             onClick={() => reset()}
-            className="inline-flex items-center gap-2 rounded-lg border border-foreground/10 px-4 py-2 hover:bg-foreground/5">
-            <RefreshCw className="size-4" />
+            variant="bordered"
+            startContent={<RefreshCw className="size-4" />}>
             Try again
-          </button>
+          </Button>
           <Link
             href="/dashboard"
             className="inline-flex items-center gap-2 rounded-lg bg-foreground text-background px-4 py-2">
@@ -72,12 +73,13 @@ export default function ErrorPage({
           <code className="mx-2 rounded bg-foreground/10 px-1.5 py-0.5">
             {String(errorId)}
           </code>
-          <button
+          <Button
+            size="sm"
+            variant="light"
             onClick={copyId}
-            className="inline-flex items-center gap-1 underline-offset-2 hover:underline">
-            <Copy className="size-3" />
+            startContent={<Copy className="size-3" />}>
             Copy
-          </button>
+          </Button>
         </div>
 
         {isDev && (

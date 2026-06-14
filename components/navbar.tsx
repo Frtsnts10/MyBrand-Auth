@@ -7,6 +7,7 @@ import {
   NavbarBrand,
   NavbarItem,
 } from "@heroui/navbar";
+import { Button } from "@heroui/button";
 import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
@@ -109,33 +110,42 @@ export const Navbar: React.FC<Props> = ({ onLogout }) => {
 
   return (
     <>
-      <HeroUINavbar
-        maxWidth="full"
-        position="sticky"
-        className="px-0 bg-white/40 dark:bg-background/60 backdrop-blur-xl border-b border-white/20 dark:border-foreground/10 shadow-sm">
+      <HeroUINavbar 
+        maxWidth="full" 
+        position="sticky" 
+        classNames={{ 
+          base: "bg-white/60 dark:bg-black/60 border-b border-foreground/10",
+          wrapper: "px-4 md:px-6" 
+        }}
+        style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
+      >
+        
         <NavbarContent justify="start" className="basis-1/3 md:hidden">
-          <button
-            className="p-2 rounded-md hover:bg-foreground/5"
+          <Button
+            isIconOnly
+            variant="light"
             aria-label="Open menu"
             aria-expanded={open}
             onClick={() => setOpen(true)}>
             <Menu className="size-5" />
-          </button>
+          </Button>
         </NavbarContent>
 
         <NavbarContent justify="center" className="basis-1/3 hidden md:flex" />
 
         {/* Right: theme + profile chip (md+) + logout */}
-        <NavbarContent
-          justify="end"
-          className="basis-1/3 pr-4 gap-2 hidden md:flex">
-          {ProfileChip}
-          <ThemeSwitch />
-          <button
-            onClick={handleLogout}
-            className="px-3 py-1.5 rounded-md border border-foreground/10 hover:bg-foreground/5 text-sm">
-            Logout
-          </button>
+        <NavbarContent justify="end" className="basis-1/3 gap-2 hidden md:flex">
+          <NavbarItem>{ProfileChip}</NavbarItem>
+          <NavbarItem><ThemeSwitch /></NavbarItem>
+          <NavbarItem>
+            <Button
+              variant="bordered"
+              size="sm"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          </NavbarItem>
         </NavbarContent>
       </HeroUINavbar>
 
@@ -173,12 +183,13 @@ export const Navbar: React.FC<Props> = ({ onLogout }) => {
                     </div>
                   </div>
                 </NextLink>
-                <button
-                  className="p-2 rounded-md hover:bg-foreground/5"
+                <Button
+                  isIconOnly
+                  variant="light"
                   aria-label="Close menu"
                   onClick={() => setOpen(false)}>
                   <X className="size-5" />
-                </button>
+                </Button>
               </div>
 
               <nav className="flex h-[calc(100%-5rem)] flex-col">
@@ -205,14 +216,16 @@ export const Navbar: React.FC<Props> = ({ onLogout }) => {
 
                 <div className="border-t border-foreground/10 p-4 flex items-center justify-between">
                   <ThemeSwitch />
-                  <button
+                  <Button
+                    variant="bordered"
+                    size="sm"
                     onClick={() => {
                       setOpen(false);
                       void handleLogout();
                     }}
-                    className="px-3 py-1.5 rounded-md border border-foreground/10 hover:bg-foreground/5 text-sm">
+                  >
                     Logout
-                  </button>
+                  </Button>
                 </div>
               </nav>
             </motion.div>

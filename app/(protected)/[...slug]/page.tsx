@@ -12,8 +12,8 @@ export default function DevelopmentFallbackPage() {
   const featureName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
-      <section className="flex flex-col items-center justify-center py-24 px-8 w-full max-w-2xl rounded-2xl border-2 border-dashed border-foreground/10 bg-white/40 dark:bg-black/20 text-center">
+    <div className="flex flex-col items-center justify-center h-full px-4 pb-4">
+      <section className="flex flex-col items-center justify-center h-full w-full max-w-3xl rounded-2xl border-2 border-dashed border-foreground/10 bg-white/40 dark:bg-black/20 text-center px-8 py-8">
         <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
           <Hammer className="size-8 text-primary" />
         </div>

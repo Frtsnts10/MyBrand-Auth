@@ -180,16 +180,15 @@ function HomeContent() {
           input: "text-foreground placeholder:text-foreground/60" 
         }}
         endContent={
-          <button
+          <Button
+            isIconOnly
+            variant="light"
+            size="sm"
             type="button"
             onClick={togglePasswordVisibility}
-            className="flex items-center justify-center cursor-pointer">
-            {showPassword ? (
-              <EyeIcon className="w-5 h-5 text-default-400" />
-            ) : (
-              <EyeOff className="w-5 h-5 text-default-400" />
-            )}
-          </button>
+            className="text-default-400">
+            {showPassword ? <EyeIcon className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+          </Button>
         }
       />
     ),
@@ -210,16 +209,15 @@ function HomeContent() {
           input: "text-foreground placeholder:text-foreground/60" 
         }}
         endContent={
-          <button
+          <Button
+            isIconOnly
+            variant="light"
+            size="sm"
             type="button"
             onClick={togglePasswordVisibility}
-            className="flex items-center justify-center cursor-pointer">
-            {showPassword ? (
-              <EyeIcon className="w-5 h-5 text-default-400" />
-            ) : (
-              <EyeOff className="w-5 h-5 text-default-400" />
-            )}
-          </button>
+            className="text-default-400">
+            {showPassword ? <EyeIcon className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+          </Button>
         }
       />
     ),
@@ -276,19 +274,23 @@ function HomeContent() {
                     disabled={loading}>
                     Sign In
                   </Button>
-                  <button
+                  <Button
+                    variant="light"
+                    size="sm"
                     onClick={() => setView("reset")}
-                    className="text-sm text-foreground cursor-pointer">
+                    className="text-foreground">
                     Forgot Password?
-                  </button>
+                  </Button>
                 </div>
                 <p className="text-sm text-foreground m-auto">
                   Don&apos;t have an account?{" "}
-                  <button
-                    onClick={() => setView("signup")}
-                    className="cursor-pointer">
+                  <Button
+                    variant="light"
+                    size="sm"
+                    className="min-w-0 p-0 h-auto bg-transparent hover:bg-transparent underline underline-offset-2"
+                    onClick={() => setView("signup")}>
                     Sign Up
-                  </button>
+                  </Button>
                 </p>
               </motion.div>
             )}
@@ -332,11 +334,13 @@ function HomeContent() {
                 </Button>
                 <p className="text-sm text-foreground m-auto">
                   Already have an account?{" "}
-                  <button
-                    onClick={() => setView("login")}
-                    className="cursor-pointer">
+                  <Button
+                    variant="light"
+                    size="sm"
+                    className="min-w-0 p-0 h-auto bg-transparent hover:bg-transparent underline underline-offset-2"
+                    onClick={() => setView("login")}>
                     Login
-                  </button>
+                  </Button>
                 </p>
               </motion.div>
             )}
@@ -416,11 +420,13 @@ function HomeContent() {
                 </p>
                 <p className="text-sm text-foreground m-auto">
                   Remember your password?{" "}
-                  <button
-                    onClick={() => setView("login")}
-                    className="cursor-pointer">
+                  <Button
+                    variant="light"
+                    size="sm"
+                    className="min-w-0 p-0 h-auto bg-transparent hover:bg-transparent underline underline-offset-2"
+                    onClick={() => setView("login")}>
                     Login
-                  </button>
+                  </Button>
                 </p>
               </motion.div>
             )}

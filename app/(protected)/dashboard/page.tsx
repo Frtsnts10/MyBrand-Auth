@@ -12,6 +12,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { Button } from "@heroui/button";
 
 const chartData = [
   { month: "Jan", value: 220 },
@@ -58,23 +59,23 @@ function Stat({
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6">
-      <header className="flex items-end justify-between gap-4">
+    <div className="h-full flex flex-col gap-4 md:gap-6">
+      <header className="flex-shrink-0 flex items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-semibold">Overview</h1>
           <p className="text-foreground/60">Snapshot of your product metrics</p>
         </div>
         <div className="flex items-center gap-2">
-          <button className="px-3 py-2 rounded-lg border border-foreground/10 hover:bg-foreground/5">
+          <Button variant="bordered">
             Export
-          </button>
-          <button className="px-3 py-2 rounded-lg bg-foreground text-background">
+          </Button>
+          <Button color="primary">
             New Report
-          </button>
+          </Button>
         </div>
       </header>
 
-      <section className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="flex-shrink-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <Stat
           title="Revenue"
           value="$42,340"
@@ -99,9 +100,15 @@ export default function DashboardPage() {
         <Stat title="Growth" value="+5.7%" Icon={TrendingUp} />
       </section>
 
-      <div className="relative mt-2">
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-2xl">
-          <div className="bg-white/60 dark:bg-background/80 backdrop-blur-2xl border border-white/20 dark:border-foreground/10 shadow-2xl rounded-2xl p-6 md:p-8 flex flex-col items-center text-center max-w-sm">
+      <div className="relative flex-1 min-h-0 rounded-2xl overflow-hidden">
+        <div 
+          className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/30 dark:bg-black/40"
+          style={{ backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)" }}
+        >
+          <div 
+            className="bg-white/60 dark:bg-black/60 border border-white/20 dark:border-white/10 shadow-2xl rounded-2xl p-6 md:p-8 flex flex-col items-center text-center max-w-sm"
+            style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
+          >
             <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
               <svg className="size-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -114,8 +121,8 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="opacity-30 pointer-events-none select-none space-y-6 overflow-hidden max-h-[800px]">
-          <section className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6">
+        <div className="opacity-30 pointer-events-none select-none h-full overflow-hidden">
+          <section className="grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-6 h-full">
         <div className="xl:col-span-2 rounded-2xl border border-white/20 dark:border-foreground/10 p-4 md:p-6 bg-white/40 dark:bg-black/30 backdrop-blur-xl shadow-sm">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">Monthly Performance</h2>
@@ -156,9 +163,9 @@ export default function DashboardPage() {
       <section className="rounded-2xl border border-white/20 dark:border-foreground/10 bg-white/40 dark:bg-black/30 backdrop-blur-xl shadow-sm overflow-hidden">
         <div className="px-4 md:px-6 py-4 flex items-center justify-between">
           <h2 className="font-semibold">Top Customers</h2>
-          <button className="px-3 py-1.5 rounded-md border border-foreground/10">
+          <Button size="sm" variant="bordered">
             View all
-          </button>
+          </Button>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
