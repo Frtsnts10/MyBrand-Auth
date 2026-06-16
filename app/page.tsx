@@ -232,11 +232,11 @@ function HomeContent() {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -150, opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex w-full lg:w-[450px] xl:w-[500px] flex-1 lg:flex-none h-full bg-white/20 dark:bg-black/20 lg:border-r border-white/30 dark:border-white/10 shadow-2xl items-center justify-center p-8 relative z-10 overflow-hidden"
+          className="flex w-full lg:w-[450px] xl:w-[500px] flex-1 lg:flex-none h-full bg-white/20 dark:bg-black/20 lg:border-r border-white/30 dark:border-white/10 shadow-2xl items-center justify-center p-4 sm:p-8 relative z-10 overflow-hidden"
           style={{ backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
-        <div className="flex flex-col gap-4 justify-center items-center h-full w-full max-w-xs">
-          <div className="lg:hidden mb-8 text-center">
-            <h1 className={`text-5xl font-bold text-foreground ${scriptFont.className}`}>MyBrand</h1>
+        <div className="flex flex-col gap-2 sm:gap-4 justify-center items-center h-full w-full max-w-xs">
+          <div className="lg:hidden mb-4 sm:mb-8 text-center">
+            <h1 className={`text-4xl sm:text-5xl font-bold text-foreground ${scriptFont.className}`}>MyBrand</h1>
           </div>
           <AnimatePresence mode="wait">
             {view === "login" && (
@@ -246,7 +246,7 @@ function HomeContent() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.4 }}
-                className="w-full flex flex-col gap-4">
+                className="w-full flex flex-col gap-3 sm:gap-4">
                 <h2 className="text-2xl font-semibold text-foreground m-auto">
                   Login Page
                 </h2>
@@ -306,7 +306,7 @@ function HomeContent() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.4 }}
-                className="w-full flex flex-col gap-4">
+                className="w-full flex flex-col gap-3 sm:gap-4">
                 <h2 className="text-2xl font-semibold text-foreground m-auto">
                   Sign Up
                 </h2>
@@ -356,7 +356,7 @@ function HomeContent() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.4 }}
-                className="w-full flex flex-col gap-4">
+                className="w-full flex flex-col gap-3 sm:gap-4">
                 <h2 className="text-2xl font-semibold text-foreground m-auto">
                   Confirm your email
                 </h2>
@@ -392,7 +392,7 @@ function HomeContent() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.4 }}
-                className="w-full flex flex-col gap-4">
+                className="w-full flex flex-col gap-3 sm:gap-4">
                 <h2 className="text-2xl font-semibold text-foreground m-auto">
                   Reset Password
                 </h2>
@@ -441,7 +441,7 @@ function HomeContent() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="w-full flex flex-col gap-4">
+                className="w-full flex flex-col gap-3 sm:gap-4">
                 <h2 className="text-2xl font-semibold text-foreground m-auto">
                   Insert New Password
                 </h2>
