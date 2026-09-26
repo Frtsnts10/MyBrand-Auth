@@ -1,53 +1,74 @@
-# Next.js & HeroUI Template
+# MyBrand Auth
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+Sign-in flow and dashboard for MyBrand, built with Next.js 15 (App Router), HeroUI v2 and Tailwind CSS v4.
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+> **Note:** Authentication is currently **mocked**. A successful sign-in sets `mock_session=true` in `localStorage`; logging out removes it. There is no backend yet, so don't use this in production as-is.
 
-## Technologies Used
+## Features
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+- **Auth screens** (`/`): sign in, sign up, reset password and update password, with Zod validation and toast feedback.
+- **Protected area** (`app/(protected)`): wrapped in `AuthGuard`, which redirects to `/` when there is no session.
+- **Dashboard** (`/dashboard`): insight cards and charts (Recharts).
+- **Placeholder pages**: a catch-all route shows a "We are Building!" page for sections that don't exist yet (POS, Products, Customers, and so on).
+- **Light/dark theme**: toggled with `next-themes`; dark is the default.
 
-## How to Use
+## Tech stack
 
-### Use the template with create-next-app
+| Area       | Library                                                                                   |
+| ---------- | ----------------------------------------------------------------------------------------- |
+| Framework  | [Next.js 15](https://nextjs.org/docs), [React 18](https://react.dev/)                    |
+| UI         | [HeroUI v2](https://heroui.com/), [Tailwind CSS v4](https://tailwindcss.com/), [Tailwind Variants](https://tailwind-variants.org) |
+| Animation  | [Framer Motion](https://www.framer.com/motion/)                                           |
+| Charts     | [Recharts 3](https://recharts.org/)                                                       |
+| Icons      | [Lucide](https://lucide.dev/)                                                             |
+| Validation | [Zod 4](https://zod.dev/)                                                                 |
+| Language   | [TypeScript 5](https://www.typescriptlang.org/)                                           |
 
-To create a new project based on this template using `create-next-app`, run the following command:
+## Getting started
 
-```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
-```
-
-### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+Requirements: Node.js 18.18 or newer (Node 20+ recommended).
 
 ```bash
 npm install
-```
-
-### Run the development server
-
-```bash
 npm run dev
 ```
 
-### Setup pnpm (optional)
+Then open <http://localhost:3000>. The sign-in form is pre-filled with demo credentials.
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+### Scripts
+
+| Command            | Description                               |
+| ------------------ | ----------------------------------------- |
+| `npm run dev`      | Start the dev server (Turbopack)          |
+| `npm run build`    | Create a production build                 |
+| `npm run start`    | Serve the production build                |
+| `npm run lint`     | Run ESLint                                |
+| `npm run lint:fix` | Run ESLint and apply automatic fixes      |
+| `npm run format`   | Format the codebase with Prettier         |
+
+### Using pnpm
+
+If you use `pnpm`, add the following to `.npmrc` and run `pnpm install` again:
 
 ```bash
 public-hoist-pattern[]=*@heroui/*
 ```
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+## Project structure
+
+```
+app/
+  page.tsx              # Auth screens (sign in / sign up / reset)
+  (protected)/          # Routes behind AuthGuard
+    dashboard/          # Dashboard
+    [...slug]/          # "Under construction" fallback
+components/             # Navbar, sidebar, auth guard, theme switch, etc.
+config/site.ts          # Site name, navigation, quick actions, insight cards
+styles/                 # Global styles
+```
+
+Navigation, quick actions and dashboard insight cards are set in `config/site.ts`.
 
 ## License
 
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
+MIT. See [LICENSE](./LICENSE). Based on the [HeroUI Next.js template](https://github.com/heroui-inc/next-app-template).
