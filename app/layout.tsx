@@ -11,11 +11,19 @@ import { fontSans } from "@/config/fonts";
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    default: `${siteConfig.name} | Sign-In`,
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  applicationName: siteConfig.name,
+  keywords: ["MyBrand", "sign-in", "dashboard", "POS", "sales", "analytics"],
   icons: { icon: "/favicon.ico" },
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} | Sign-In`,
+    description: siteConfig.description,
+  },
 };
 
 export const viewport: Viewport = {

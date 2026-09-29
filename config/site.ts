@@ -18,8 +18,9 @@ export type InsightCardKey =
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "MyBrand | Sign-In",
-  description: "Make beautiful dashboards that feel like a co‑pilot.",
+  name: "MyBrand",
+  description:
+    "Sign in to MyBrand to manage sales, products, customers and reports from one dashboard.",
 
   /**
    * Minimal top navbar (desktop/tablet). Mobile drawer can show more items.
@@ -77,10 +78,6 @@ export const siteConfig = {
   ] as InsightCardKey[],
 
   links: {
-    github: "https://github.com/heroui-inc/heroui",
-    twitter: "https://twitter.com/hero_ui",
-    docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
+    github: "https://github.com/frtsnts10/mybrand-auth",
   },
 };
