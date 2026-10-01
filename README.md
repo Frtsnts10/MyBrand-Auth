@@ -22,6 +22,7 @@ Sign-in flow and dashboard for MyBrand, built with Next.js 15 (App Router), Hero
 | Charts     | [Recharts 3](https://recharts.org/)                                                       |
 | Icons      | [Lucide](https://lucide.dev/)                                                             |
 | Validation | [Zod 4](https://zod.dev/)                                                                 |
+| Backend    | [Firebase](https://firebase.google.com/docs/web/setup) (initialised, not yet used)       |
 | Language   | [TypeScript 5](https://www.typescriptlang.org/)                                           |
 
 ## Getting started
@@ -34,6 +35,10 @@ npm run dev
 ```
 
 Then open <http://localhost:3000>. The sign-in form is pre-filled with demo credentials.
+
+### Firebase
+
+Firebase is initialised in `lib/firebase.ts` (export `firebaseApp`). Copy `.env.example` to `.env.local` and fill in the web app config from the Firebase console (Project settings > Your apps). `.env.local` is gitignored; set the same `NEXT_PUBLIC_FIREBASE_*` variables in your hosting provider (e.g. Vercel) for deployed builds. Sign-in is still mocked; Firebase Auth isn't wired in yet.
 
 ### Scripts
 
@@ -63,6 +68,7 @@ app/
     dashboard/          # Dashboard
     [...slug]/          # "Under construction" fallback
 components/             # Navbar, sidebar, auth guard, theme switch, etc.
+lib/firebase.ts         # Firebase app initialisation
 config/site.ts          # Site name, navigation, quick actions, insight cards
 styles/                 # Global styles
 ```
