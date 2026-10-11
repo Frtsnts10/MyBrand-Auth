@@ -59,7 +59,7 @@ function Stat({
 export default function DashboardPage() {
   return (
     <div className="space-y-6">
-      <header className="flex items-end justify-between gap-4">
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl md:text-3xl font-semibold">Overview</h1>
           <p className="text-foreground/60">Snapshot of your product metrics</p>
