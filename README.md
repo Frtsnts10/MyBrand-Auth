@@ -4,6 +4,12 @@ Sign-in flow and dashboard for MyBrand, built with Next.js 15 (App Router), Hero
 
 > **Note:** Authentication is currently **mocked**. A successful sign-in sets `mock_session=true` in `localStorage`; logging out removes it. There is no backend yet, so don't use this in production as-is.
 
+## Why there is no database
+
+This project is a UI/flow demo, so it intentionally has no database or backend. Users, passwords and sessions are not stored anywhere; the only state is the `mock_session` flag in the browser's `localStorage`, and any email/password that passes Zod format validation is accepted.
+
+A database becomes necessary once you move to real authentication: storing users and password hashes, issuing and validating sessions or tokens, and sending reset-password emails. At that point, prefer an established solution such as [Auth.js](https://authjs.dev/), [Clerk](https://clerk.com/) or [Supabase Auth](https://supabase.com/auth) over building it yourself, and replace the `localStorage` checks in `app/page.tsx`, `components/auth-guard.tsx` and `components/navbar.tsx`.
+
 ## Features
 
 - **Auth screens** (`/`): sign in, sign up, reset password and update password, with Zod validation and toast feedback.
